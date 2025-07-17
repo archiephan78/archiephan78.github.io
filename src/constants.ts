@@ -18,7 +18,7 @@ export const SOCIALS = [
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/chung-phan-4072b9156//",
+    href: "https://www.linkedin.com/in/chung-phan-4072b9156/",
     linkTitle: `${SITE.title} on LinkedIn`,
     icon: IconLinkedin,
   },
@@ -71,9 +71,9 @@ export const SHARE_LINKS = [
 
 export const GISCUS: GiscusProps = {
   repo: "archiephan78/archiephan78.github.io",
-  repoId: "MDEwOlJlcG9zaXRvcnkyMTk3NTcxNTQ=",
-  category: "General",
-  categoryId: "DIC_kwDODRk6Ys4Cqtv2",
+  repoId: "R_kgDOPN5Z6g",
+  category: "Announcements",
+  categoryId: "DIC_kwDOPN5Z6s4CtEaC",
   mapping: "title",
   reactionsEnabled: "1",
   emitMetadata: "0",
