@@ -1,14 +1,13 @@
 ---
 author: archiephan
 pubDatetime: 2020-08-17T19:20:35Z
-modDatetime: 2025-07-17T06:37:41Z
+modDatetime: 2025-07-17T07:41:26Z
 title: "OAuth2 with Openstack Keystone"
 draft: false
 tags:
   - Openstack
   - Oauth2
 description: OAuth2 with Openstack Keystone!
-ogImage: https://github.com/user-attachments/assets/4da0be5a-f580-4778-ac0c-cbb97dfe8da0
 ---
 
 # OAuth2 with Openstack Keystone
