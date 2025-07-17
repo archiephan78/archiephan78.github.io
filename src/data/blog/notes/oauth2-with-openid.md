@@ -8,6 +8,7 @@ tags:
   - Openstack
   - Oauth2
 description: OAuth2 with Openstack Keystone
+ogImage: https://github.com/user-attachments/assets/4da0be5a-f580-4778-ac0c-cbb97dfe8da0
 ---
 # OAuth2 with Openstack Keystone
 
