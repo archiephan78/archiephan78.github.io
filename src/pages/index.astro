@@ -1,0 +1,102 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Card from "@/components/Card.astro";
+import getLatestPosts from "@/utils/getLatestPosts";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+
+const posts = await getCollection("blog");
+const recentPosts = posts.sort(getLatestPosts);
+---
+
+<Layout>
+  <Header />
+  <main id="main-content" data-layout="index">
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
+          <ul>
+            {recentPosts.map(
+              (data, index) =>
+                index < SITE.postPerIndex && <Card variant="h3" {...data} />
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="my-8 text-center">
+      <LinkButton href="/posts/">
+        All Posts
+        <IconArrowRight class="inline-block" />
+      </LinkButton>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset?.layout;
+    if (indexLayout) {
+      sessionStorage.setItem("backUrl", "/");
+    }
+
+    // Handle folder toggles
+    document.querySelectorAll("[data-folder]").forEach(folder => {
+      folder.addEventListener("click", () => {
+        const folderName = folder.getAttribute("data-folder");
+        const content = document.querySelector(
+          `[data-content="${folderName}"]`
+        );
+        const toggle = folder.querySelector(".folder-toggle");
+
+        if (content) {
+          content.classList.toggle("hidden");
+          if (toggle) {
+            toggle.textContent = content.classList.contains("hidden")
+              ? "▶"
+              : "▼";
+          }
+        }
+      });
+    });
+
+    // Handle subfolder toggles
+    document.querySelectorAll("[data-subfolder]").forEach(subfolder => {
+      subfolder.addEventListener("click", () => {
+        const subfolderName = subfolder.getAttribute("data-subfolder");
+        const content = document.querySelector(
+          `[data-subfolder-content="${subfolderName}"]`
+        );
+        const toggle = subfolder.querySelector(".subfolder-toggle");
+
+        if (content) {
+          content.classList.toggle("hidden");
+          if (toggle) {
+            toggle.textContent = content.classList.contains("hidden")
+              ? "▶"
+              : "▼";
+          }
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .folder-toggle,
+  .subfolder-toggle {
+    transition: transform 0.2s;
+  }
+  [data-content]:not(.hidden) .folder-toggle,
+  [data-subfolder-content]:not(.hidden) .subfolder-toggle {
+    transform: rotate(90deg);
+  }
+</style>

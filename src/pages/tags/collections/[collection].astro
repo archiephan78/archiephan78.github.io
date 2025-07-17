@@ -1,0 +1,109 @@
+---
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import { getCollection } from "astro:content";
+import { getAllCollections } from "@/utils/collections";
+import getSortedPosts from "@/utils/getSortedPosts";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "../../../config";
+
+export async function getStaticPaths() {
+  const collections = getAllCollections();
+  return collections.map(collection => ({
+    params: { collection: collection.folder },
+    props: { collection },
+  }));
+}
+
+const { collection } = Astro.props;
+const { folder, name, description } = collection;
+
+const posts = await getCollection("blog", ({ id }) =>
+  id.startsWith(folder + "/")
+);
+
+const postsByFolder = posts.reduce(
+  (acc, post) => {
+    const postPath = post.id.split("/");
+    const subFolder = postPath[1] || "root";
+    if (!acc[subFolder]) {
+      acc[subFolder] = [];
+    }
+    acc[subFolder].push(post);
+    return acc;
+  },
+  {} as Record<string, CollectionEntry<"blog">[]>
+);
+
+const sortedFolders = Object.keys(postsByFolder).sort((a, b) => {
+  if (a === "root") return -1;
+  if (b === "root") return 1;
+  return a.localeCompare(b);
+});
+---
+
+<Layout title={`${name} | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle={name} pageDesc={description}>
+    {
+      sortedFolders.map(folder => (
+        <div class="mb-6">
+          <div class="folder-container">
+            <input
+              type="checkbox"
+              id={`folder-${folder}`}
+              class="peer hidden"
+            />
+            <label
+              for={`folder-${folder}`}
+              class="group flex cursor-pointer items-center"
+            >
+              <span class="folder-toggle mr-2 text-gray-500" />
+              <h3 class="text-xl font-semibold capitalize group-hover:text-accent">
+                {folder.replaceAll("-", " ")}
+              </h3>
+            </label>
+            <div class="hidden pl-6 peer-checked:block">
+              <ul class="space-y-2">
+                {getSortedPosts(postsByFolder[folder]).map(post => (
+                  <li>
+                    <Card variant="h3" {...post} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </Main>
+  <Footer />
+</Layout>
+
+<style>
+  .folder-toggle {
+    transition: transform 0.2s;
+  }
+  input:checked ~ label .folder-toggle {
+    transform: rotate(90deg);
+  }
+  input:checked ~ label .folder-toggle::before {
+    content: "▼";
+  }
+  input:not(:checked) ~ label .folder-toggle::before {
+    content: "▶";
+  }
+
+  /* Add transition for links */
+  a {
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Add loading state */
+  a:active {
+    opacity: 0.7;
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { getCollection } from "astro:content";
+import { getAllCollections } from "@/utils/collections";
+import { SITE } from "../../../config";
+
+const collections = getAllCollections();
+
+// Get post count for each collection
+const collectionsWithPostCount = await Promise.all(
+  collections.map(async collection => {
+    const posts = await getCollection("blog", ({ id }) =>
+      id.startsWith(collection.folder + "/")
+    );
+    return {
+      ...collection,
+      postCount: posts.length,
+    };
+  })
+);
+---
+
+<Layout title={`Collections | ${SITE.title}`}>
+  <Header />
+  <Main
+    pageTitle="Collections"
+    pageDesc="Tổng hợp các bài viết được phân loại theo chủ đề"
+  >
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        collectionsWithPostCount.map(collection => (
+          <a
+            href={`/tags/collections/${collection.folder}`}
+            class="group rounded-lg border border-gray-200 p-6 transition-all hover:border-accent hover:shadow-lg dark:border-gray-800 dark:hover:border-accent"
+          >
+            <h2 class="mb-2 text-xl font-semibold group-hover:text-accent">
+              {collection.name}
+            </h2>
+            <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+              {collection.description}
+            </p>
+            <div class="text-sm text-gray-500 dark:text-gray-500">
+              {collection.postCount} bài viết
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </Main>
+  <Footer />
+</Layout>
+
+<style>
+  a {
+    transition: all 0.2s ease-in-out;
+  }
+</style>
