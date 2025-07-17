@@ -1,0 +1,735 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://arch1ephan.com/posts/notes/vms-operator/"><meta name="generator" content="Astro v5.5.2"><!-- General Meta Tags --><title>VictoriaMetrics operator on K8S | arch1ephan.com</title><meta name="title" content="VictoriaMetrics operator on K8S | arch1ephan.com"><meta name="description" content="VictoriaMetrics operator on K8S"><meta name="author" content="archiephan"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="VictoriaMetrics operator on K8S | arch1ephan.com"><meta property="og:description" content="VictoriaMetrics operator on K8S"><meta property="og:url" content="https://arch1ephan.com/posts/notes/vms-operator/"><meta property="og:image" content="https://arch1ephan.com/posts/notes/vms-operator/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2025-07-17T08:15:41.000Z"><meta property="article:modified_time" content="2025-07-17T08:19:05.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://arch1ephan.com/posts/notes/vms-operator/"><meta property="twitter:title" content="VictoriaMetrics operator on K8S | arch1ephan.com"><meta property="twitter:description" content="VictoriaMetrics operator on K8S"><meta property="twitter:image" content="https://arch1ephan.com/posts/notes/vms-operator/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"VictoriaMetrics operator on K8S | arch1ephan.com","image":"https://arch1ephan.com/posts/notes/vms-operator/index.png","datePublished":"2025-07-17T08:15:41.000Z","dateModified":"2025-07-17T08:19:05.000Z","author":[{"@type":"Person","name":"archiephan","url":"https://arch1ephan.com/"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="arch1ephan.com" href="https://arch1ephan.com/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CMTcOisY.js"></script><script src="/toggle-theme.js"></script><script src="https://www.googletagmanager.com/gtag/js?id=G-EQL1B4QF4J"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-EQL1B4QF4J");
+    </script><link rel="stylesheet" href="/_astro/about.BjZ3mr78.css">
+<style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+[data-astro-image]{width:100%;height:auto;object-fit:var(--fit);object-position:var(--pos);aspect-ratio:var(--w) / var(--h)}[data-astro-image=responsive]{max-width:calc(var(--w) * 1px);max-height:calc(var(--h) * 1px)}[data-astro-image=fixed]{width:calc(var(--w) * 1px);height:calc(var(--h) * 1px)}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: victoria-metrics-operator-on-k-8-s; }@layer astro { ::view-transition-old(victoria-metrics-operator-on-k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(victoria-metrics-operator-on-k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(victoria-metrics-operator-on-k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(victoria-metrics-operator-on-k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-2"] { view-transition-name: monitoring; }@layer astro { ::view-transition-old(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: victoriametric; }@layer astro { ::view-transition-old(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-4"] { view-transition-name: k-8-s; }@layer astro { ::view-transition-old(k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(k-8-s) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4>  <header> <a id="skip-to-content" href="#main-content" class="absolute -top-full left-16 z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <div id="nav-container" class="mx-auto flex max-w-3xl flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"> <a href="/" class="absolute py-1 text-2xl leading-7 font-semibold whitespace-nowrap sm:static"> arch1ephan.com </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:ml-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/posts" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <div class="relative" id="tags-dropdown"> <a href="/tags" class="block px-4 py-3 text-center font-medium hover:text-accent sm:px-2 sm:py-1"> <span class="flex items-center justify-center gap-1">
+Tags
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"> <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path> </svg> </span> </a> <div class="absolute top-full left-0 z-50 mt-1 hidden w-48 rounded-md bg-white py-1 shadow-lg dark:bg-gray-800" id="tags-menu"> <ul class="pt-2 pb-1">  </ul> </div> </div> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li> <li class="col-span-2"> <a href="/archives" class="group inline-block hover:text-accent focus-outline flex justify-center p-3 sm:p-1" aria-label="archives" title="Archives"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only">Archives</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <a href="/search" class="group inline-block hover:text-accent focus-outline flex p-3 sm:p-1" aria-label="search" title="Search"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> <div class="max-w-3xl mx-auto px-4"> <hr class="border-border" aria-hidden="true"> </div> </header> <script type="module">function d(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const s=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",s?"false":"true"),e.setAttribute("aria-label",s?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}function u(){const e=document.getElementById("tags-dropdown"),t=document.getElementById("tags-menu");let n;!e||!t||(e.addEventListener("mouseenter",()=>{clearTimeout(n),t.classList.remove("hidden")}),e.addEventListener("mouseleave",()=>{n=setTimeout(()=>{t.classList.add("hidden")},100)}))}d();u();document.addEventListener("astro:after-swap",()=>{d(),u()});</script> <div class="mx-auto flex w-full max-w-3xl items-center justify-start px-2"><a id="back-button" href="/" class="group inline-block hover:text-accent focus-outline mt-8 mb-2 flex hover:text-foreground/75"><svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>Go back</span></a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="mx-auto w-full max-w-3xl px-4 pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> VictoriaMetrics operator on K8S </h1> <div class="flex items-center gap-4"> <div class="flex items-end space-x-2 opacity-80 my-2"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-[1.375rem]"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg> <span class="text-sm italic sm:text-base">
+Updated:
+</span> <span class="text-sm italic sm:text-base"> <time datetime="2025-07-17T08:19:05.000Z">17 Jul, 2025</time> <span aria-hidden="true"> | </span> <span class="sr-only">&nbsp;at&nbsp;</span> <span class="text-nowrap">08:19 AM</span> </span> </div> <div class="opacity-80 max-sm:hidden"><span aria-hidden="true" class="max-sm:hidden">
+|
+</span><a class="space-x-1.5 hover:opacity-75" href="https://github.com/archiephan78/archiephan78.github.io/edit/master/src/data/blog/notes/vms-operator.md" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span class="italic max-sm:text-sm sm:inline">Suggest Changes</span></a></div> </div> <article id="article" class="mx-auto prose mt-8 max-w-3xl"> <h1 id="victoriametrics-operator-on-k8s">VictoriaMetrics operator on K8S</h1>
+<p><img  sizes="(min-width: 601px) 601px, 100vw" loading="lazy" decoding="async" fetchpriority="auto" style="--w: 601; --h: 927;" data-astro-image="responsive" width="601" height="927" src="/_astro/vms-k8s.drawio.RulK2uCQ_23js31.webp" srcset="/_astro/vms-k8s.drawio.RulK2uCQ_23js31.webp 601w"></p>
+<ul>
+<li>
+<p>In previous section i deployed VMs cluster on K8S with Helm. In this part i will using VictoriaMetrics on K8S with VMs operator</p>
+</li>
+<li>
+<p>Design and implementation inspired by prometheus-operator. It’s great a tool for managing monitoring configuration of your applications. VictoriaMetrics operator has api capability with it. So you can use familiar CRD objects: ServiceMonitor, PodMonitor, PrometheusRule and Probe. Or you can use VictoriaMetrics CRDs:</p>
+<ul>
+<li>VMServiceScrape - defines scraping metrics configuration from pods backed by services.</li>
+<li>VMPodScrape - defines scraping metrics configuration from pods.</li>
+<li>VMRule - defines alerting or recording rules.</li>
+<li>VMProbe - defines a probing configuration for targets with blackbox exporter.</li>
+</ul>
+</li>
+<li>
+<p>Download CRD form github</p>
+</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># Get latest release version from https://github.com/VictoriaMetrics/operator/releases/latest</span></span>
+<span class="line"><span style="color:#D32F2F;font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="color:#24292EFF;--shiki-dark:#C5E478"> VM_VERSION</span><span style="color:#D32F2F;--shiki-dark:#C792EA">=</span><span style="color:#22863A;--shiki-dark:#ECC48D">`</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">basename</span><span style="color:#22863A;--shiki-dark:#ECC48D"> $(</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">curl</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -fs</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -o/dev/null</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -w</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> %{redirect_url}</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> https://github.com/VictoriaMetrics/operator/releases/latest</span><span style="color:#22863A;--shiki-dark:#ECC48D">)`</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">wget</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> https://github.com/VictoriaMetrics/operator/releases/download/</span><span style="color:#24292EFF;--shiki-dark:#C5E478">$VM_VERSION</span><span style="color:#2B5581;--shiki-dark:#ECC48D">/bundle_crd.zip</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">unzip</span><span style="color:#2B5581;--shiki-dark:#ECC48D">  bundle_crd.zip</span></span></code></pre>
+<ul>
+<li>Install CRD</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">kubectl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> apply</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -f</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> release/crds</span></span></code></pre>
+<ul>
+<li>Create namespace <code>monitoring-system</code></li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> v1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> Namespace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> monitoring-system</span></span></code></pre>
+<ul>
+<li>apply operator manifest into cluster</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">kubectl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> apply</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -f</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> release/operator/</span></span></code></pre>
+<ul>
+<li>Check pod installed</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">➜</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> kubectl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> get</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> pods</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -n</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> monitoring-system</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">NAME</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                           READY</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   STATUS</span><span style="color:#2B5581;--shiki-dark:#ECC48D">    RESTARTS</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   AGE</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vm-operator-8464b8949c-sm98w</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   1/1</span><span style="color:#2B5581;--shiki-dark:#ECC48D">     Running</span><span style="color:#1976D2;--shiki-dark:#F78C6C">   0</span><span style="color:#2B5581;--shiki-dark:#ECC48D">          9m19s</span></span></code></pre>
+<ul>
+<li>Install vmcluster</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMCluster</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> example-vmcluster-persistent</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # Add fields here</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  retentionPeriod</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">4</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  replicationFactor</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  vmstorage</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    replicaCount</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    storageDataPath</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">/vm-data</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    storage</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      volumeClaimTemplate</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">        spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          storageClassName</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> premium-ssd</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          resources</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">            requests</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">              storage</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 10Gi</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    resources</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      limits</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">        cpu</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">0.5</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">        memory</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 500Mi</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  vmselect</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    replicaCount</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    cacheMountPath</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">/select-cache</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    storage</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      volumeClaimTemplate</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">        spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          storageClassName</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> premium-ssd</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          resources</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">            requests</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">              storage</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 2Gi</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    resources</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      limits</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">        cpu</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">0.3</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">        memory</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">300Mi</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  vminsert</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    replicaCount</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 1</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>check pod create</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">➜</span><span style="color:#2B5581;--shiki-dark:#ECC48D">  kubectl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> get</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> pod</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -o</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> wide</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">NAME</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                                                     READY</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   STATUS</span><span style="color:#2B5581;--shiki-dark:#ECC48D">    RESTARTS</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   AGE</span><span style="color:#2B5581;--shiki-dark:#ECC48D">     IP</span><span style="color:#2B5581;--shiki-dark:#ECC48D">           NODE</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                                           NOMINATED</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> NODE</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   READINESS</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> GATES</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vminsert-example-vmcluster-persistent-547f79f869-xmrds</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   1/1</span><span style="color:#2B5581;--shiki-dark:#ECC48D">     Running</span><span style="color:#1976D2;--shiki-dark:#F78C6C">   0</span><span style="color:#2B5581;--shiki-dark:#ECC48D">          6m44s</span><span style="color:#1976D2;--shiki-dark:#F78C6C">   10.200.1.3</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   pool-bqap2vyc-bbxkamrsu3v0r5hn-node-g8u7phor</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">   &#x3C;</span><span style="color:#2B5581;--shiki-dark:#ECC48D">non</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">e</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">           &#x3C;</span><span style="color:#2B5581;--shiki-dark:#ECC48D">non</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">e</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">></span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vmselect-example-vmcluster-persistent-0</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                  1/1</span><span style="color:#2B5581;--shiki-dark:#ECC48D">     Running</span><span style="color:#1976D2;--shiki-dark:#F78C6C">   0</span><span style="color:#2B5581;--shiki-dark:#ECC48D">          12m</span><span style="color:#1976D2;--shiki-dark:#F78C6C">     10.200.0.8</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   pool-bqap2vyc-bbxkamrsu3v0r5hn-node-p2jnd4qh</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">   &#x3C;</span><span style="color:#2B5581;--shiki-dark:#ECC48D">non</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">e</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">           &#x3C;</span><span style="color:#2B5581;--shiki-dark:#ECC48D">non</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">e</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">></span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vmstorage-example-vmcluster-persistent-0</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                 1/1</span><span style="color:#2B5581;--shiki-dark:#ECC48D">     Running</span><span style="color:#1976D2;--shiki-dark:#F78C6C">   0</span><span style="color:#2B5581;--shiki-dark:#ECC48D">          13m</span><span style="color:#1976D2;--shiki-dark:#F78C6C">     10.200.0.7</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   pool-bqap2vyc-bbxkamrsu3v0r5hn-node-p2jnd4qh</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">   &#x3C;</span><span style="color:#2B5581;--shiki-dark:#ECC48D">non</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">e</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">           &#x3C;</span><span style="color:#2B5581;--shiki-dark:#ECC48D">non</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">e</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">></span></span></code></pre>
+<ul>
+<li>
+<p>Note: vmselect has vmui UI at URL <code>&#x3C;URL>/select/0/prometheus/vmui/</code></p>
+</li>
+<li>
+<p>Install vmagent</p>
+</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">kubectl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> apply</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -f</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> release/examples/vmagent_rbac.yaml</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cat</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> &#x3C;&#x3C;</span><span style="color:#24292EFF;--shiki-dark:#D9F5DD">EOF</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> |</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> kubectl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> apply</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -f</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> -</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D"> apiVersion: operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D"> kind: VMAgent</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D"> metadata:</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   name: example-vmagent</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D"> spec:</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   selectAllByDefault: true</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   replicaCount: 1</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   remoteWrite:</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">     - url: "http://vminsert-example-vmcluster-persistent.default.svc.cluster.local:8480/insert/0/prometheus/api/v1/write"</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D9F5DD">EOF</span></span></code></pre>
+<ul>
+<li>Install VMAlertmanager - represents alertmanager configuration, first, you have to create secret with a configuration for it</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMAlertmanager</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> example-alertmanager-raw-config</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # Add fields here</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  replicaCount</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  configSecret</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> alertmanager-config</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  configRawYaml</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#D32F2F;font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> |</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">        global:</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          resolve_timeout: 5m</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">        route:</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          group_wait: 30s</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          group_interval: 5m</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          repeat_interval: 12h</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          receiver: 'webhook'</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">        receivers:</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">        - name: 'webhook'</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          webhook_configs:</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          - url: 'http://localhost:30502/'</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>Config <code>VMAlertmanagerConfig</code> allows managing <code>VMAlertmanager</code> configuration.</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMAlertmanagerConfig</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> example</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  namespace</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> default</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  route</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    routes</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">receiver</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> webhook</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">        continue</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> true</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    group_by</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> []</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    continue</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> false</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    matchers</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">job = "alertmanager"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    group_wait</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 30s</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    group_interval</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 45s</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    repeat_interval</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 1h</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  mute_time_intervals</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> base</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      time_intervals</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">times</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">start_time</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> ""</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">              end_time</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> ""</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          weekdays</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> []</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          days_of_month</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> []</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          months</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> []</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          years</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> []</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  receivers</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      webhook_configs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">url</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> http://localhost:30502/</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>Create <code>vmalert</code> object</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMAlert</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> example-vmalert</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  replicaCount</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  datasource</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    url</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">http://vmselect-example-vmcluster-persistent.default.svc:8481/select/0/prometheus/</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  notifier</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      url</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">http://vmalertmanager-example-alertmanager-raw-config.default.svc:9093</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  evaluationInterval</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">30s</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  selectAllByDefault</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>By default when we create ressource with VM oprerator, VMServiceScrape will auto create:</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">➜</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> kubectl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> get</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> VMServiceScrape</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">NAME</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                                             AGE</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vmagent-example-vmagent</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                          3h36m</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vmalert-example-vmalert</span><span style="color:#2B5581;--shiki-dark:#ECC48D">                          76m</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vmalertmanager-example-alertmanager-raw-config</span><span style="color:#2B5581;--shiki-dark:#ECC48D">   176m</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vminsert-example-vmcluster-persistent</span><span style="color:#2B5581;--shiki-dark:#ECC48D">            3h54m</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vmselect-example-vmcluster-persistent</span><span style="color:#2B5581;--shiki-dark:#ECC48D">            3h55m</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vmstorage-example-vmcluster-persistent</span><span style="color:#2B5581;--shiki-dark:#ECC48D">           3h56m</span></span></code></pre>
+<ul>
+<li>scapre metric from kube-state-metrics</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMStaticScrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kube-state-metrics-scrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  jobName</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kube-state-metrics</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  targetEndpoints</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">targets</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#22863A;--shiki-dark:#ECC48D">kube-state-metrics.kube-system.svc.cluster.local:8080</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>Checking on vmui UI for new metric scrape:</li>
+</ul>
+<p><img  sizes="(min-width: 3344px) 3344px, 100vw" loading="lazy" decoding="async" fetchpriority="auto" style="--w: 3344; --h: 1196;" data-astro-image="responsive" width="3344" height="1196" src="/_astro/vmui.CZuN3479_1mmHl7.webp" srcset="/_astro/vmui.CZuN3479_Z1bMJN0.webp 640w, /_astro/vmui.CZuN3479_2ijsCc.webp 750w, /_astro/vmui.CZuN3479_BBRCL.webp 828w, /_astro/vmui.CZuN3479_1LOm0t.webp 1080w, /_astro/vmui.CZuN3479_1rYFc.webp 1280w, /_astro/vmui.CZuN3479_Z1Nytlb.webp 1668w, /_astro/vmui.CZuN3479_ZOyQwx.webp 2048w, /_astro/vmui.CZuN3479_Z2k2uW6.webp 2560w, /_astro/vmui.CZuN3479_1mmHl7.webp 3344w"></p>
+<ul>
+<li>kube-cadvisor-metrics</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMNodeScrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> cadvisor-metrics</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  scheme</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">https</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  tlsConfig</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    insecureSkipVerify</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> true</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    caFile</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">/var/run/secrets/kubernetes.io/serviceaccount/ca.crt</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  bearerTokenFile</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">/var/run/secrets/kubernetes.io/serviceaccount/token</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  relabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> labelmap</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __meta_kubernetes_node_label_(.+)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __address__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes.default.svc:443</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_node_name</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> (.+)</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __metrics_path__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> /api/v1/nodes/${1}/proxy/metrics/cadvisor</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  metricRelabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">pod</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">(.+)</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> pod_name</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">${1}</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">container</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">(.+)</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> container_name</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">${1}</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> name</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> k8s_stub</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">id</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">^/system\.slice/(.+)\.service$</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> systemd_service_name</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">${1}</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>
+<p>I create more some example rule scrape for vmagent if you dont want use kube-state-metrics, becareful with <code>${1}</code> variable in manifest, it maybe missing if you run in bash shell</p>
+</li>
+<li>
+<p>kubernetes-apiservers</p>
+</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMNodeScrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes-apiservers</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  scheme</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> https</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  tlsConfig</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    caFile</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> /var/run/secrets/kubernetes.io/serviceaccount/ca.crt</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    insecureSkipVerify</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> true</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  bearerTokenFile</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> /var/run/secrets/kubernetes.io/serviceaccount/token</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  relabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        [</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">            __meta_kubernetes_namespace</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">            __meta_kubernetes_service_name</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">            __meta_kubernetes_endpoint_port_name</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        ]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> keep</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> default;kubernetes;https</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>kube-nodes *</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMNodeScrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes-nodes</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  scheme</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> https</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  tlsConfig</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    caFile</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> /var/run/secrets/kubernetes.io/serviceaccount/ca.crt</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    insecureSkipVerify</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> true</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  bearerTokenFile</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> /var/run/secrets/kubernetes.io/serviceaccount/token</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  relabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> labelmap</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __meta_kubernetes_node_label_(.+)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __address__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes.default.svc:443</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_node_name</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> (.+)</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __metrics_path__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> /api/v1/nodes/${1}/proxy/metrics</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>kubernetes-service-endpoints</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMServiceScrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes-service-endpoints</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  endpoints</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">port</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> https</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      relabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> drop</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_pod_container_init</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> keep_if_equal</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_pod_annotation_prometheus_io_port</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> __meta_kubernetes_pod_container_port_number</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_annotation_prometheus_io_scrape</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> keep</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_annotation_prometheus_io_scheme</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __scheme__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> (https?)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_annotation_prometheus_io_path</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __metrics_path__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> (.+)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">              __address__</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">              __meta_kubernetes_service_annotation_prometheus_io_port</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            ]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __address__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> ([^:]+)(?::\d+)?;(\d+)</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> $1:$2</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> labelmap</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __meta_kubernetes_service_label_(.+)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_namespace</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes_namespace</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_name</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes_name</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_pod_node_name</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes_node</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>kubernetes-service-endpoints-slow</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">cat &#x3C;&#x3C; EOF | kubectl apply -f -</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMServiceScrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes-service-endpoints-slow</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  endpoints</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">port</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> https</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      relabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> drop</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_pod_container_init</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> keep_if_equal</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_pod_annotation_prometheus_io_port</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> __meta_kubernetes_pod_container_port_number</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_annotation_prometheus_io_scrape_slow</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> keep</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_annotation_prometheus_io_scheme</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __scheme__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> (https?)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_annotation_prometheus_io_path</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __metrics_path__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> (.+)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            [</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">              __address__</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">              __meta_kubernetes_service_annotation_prometheus_io_port</span><span style="color:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">            ]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __address__</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> ([^:]+)(?::\d+)?;(\d+)</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          replacement</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> $1:$2</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> labelmap</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          regex</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> __meta_kubernetes_service_label_(.+)</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_namespace</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes_namespace</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_service_name</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes_name</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#2B5581;--shiki-dark:#ECC48D">__meta_kubernetes_pod_node_name</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          action</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> replace</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> kubernetes_node</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">EOF</span></span></code></pre>
+<ul>
+<li>because i deploy node exxpoter on ns default so i create this rule for scrape node-expoter metrics</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">apiVersion</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> operator.victoriametrics.com/v1beta1</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">kind</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> VMPodScrape</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">metadata</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  name</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> pod-scrape-default</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">spec</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  podMetricsEndpoints</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">    - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">port</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> metrics</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      scheme</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> http</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      targetPort</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> metrics</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      path</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> /metrics</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      interval</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 20s</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      scrapeTimeout</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> 2s</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      honorLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> false</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      honorTimestamps</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> false</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      relabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#22863A;--shiki-dark:#ECC48D">__address__</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> addr</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">      metricRelabelConfigs</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">        - </span><span style="color:#D32F2F;--shiki-dark:#7FDBCA">sourceLabels</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#22863A;--shiki-dark:#ECC48D">__address__</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">          targetLabel</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> addr</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  namespaceSelector</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    any</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#1976D2;--shiki-dark:#FF5874"> false</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    matchNames</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#22863A;--shiki-dark:#ECC48D">default</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span></code></pre> </article> <hr class="my-8 border-dashed"> <div class="opacity-80 sm:hidden"><span aria-hidden="true" class="max-sm:hidden">
+|
+</span><a class="space-x-1.5 hover:opacity-75" href="https://github.com/archiephan78/archiephan78.github.io/edit/master/src/data/blog/notes/vms-operator.md" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span class="italic max-sm:text-sm sm:inline">Suggest Changes</span></a></div> <ul class="mt-4 mb-8 sm:my-8"> <li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/monitoring/" class="relative pr-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 text-sm" data-astro-transition-scope="astro-36ssibgs-2"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -mr-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>monitoring</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/victoriametric/" class="relative pr-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 text-sm" data-astro-transition-scope="astro-36ssibgs-3"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -mr-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>victoriametric</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/k-8-s/" class="relative pr-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 text-sm" data-astro-transition-scope="astro-36ssibgs-4"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -mr-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>K8S</span> </a> </li> </ul> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();;(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="ZQIRKt" component-url="/_astro/Comments.Bq4i52d7.js" component-export="default" renderer-url="/_astro/client.BPIbHqJh.js" props="{}" ssr client="only" opts="{&quot;name&quot;:&quot;Comments&quot;,&quot;value&quot;:&quot;react&quot;}"></astro-island> <div class="mt-4 flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-end sm:gap-4"> <div class="flex flex-col flex-wrap items-center justify-center gap-1 sm:items-start"> <span class="italic">Share this post on:</span> <div class="text-center"> <a href="https://wa.me/?text=https://arch1ephan.com/posts/notes/vms-operator/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via WhatsApp"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg> <span class="sr-only">Share this post via WhatsApp</span> </a><a href="https://www.facebook.com/sharer.php?u=https://arch1ephan.com/posts/notes/vms-operator/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Facebook"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg> <span class="sr-only">Share this post on Facebook</span> </a><a href="https://x.com/intent/post?url=https://arch1ephan.com/posts/notes/vms-operator/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on X"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">Share this post on X</span> </a><a href="https://t.me/share/url?url=https://arch1ephan.com/posts/notes/vms-operator/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via Telegram"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg> <span class="sr-only">Share this post via Telegram</span> </a><a href="https://pinterest.com/pin/create/button/?url=https://arch1ephan.com/posts/notes/vms-operator/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Pinterest"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg> <span class="sr-only">Share this post on Pinterest</span> </a><a href="mailto:?subject=See%20this%20post&#38;body=https://arch1ephan.com/posts/notes/vms-operator/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via email"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Share this post via email</span> </a> </div> </div> <button id="back-to-top" class="focus-outline py-1 whitespace-nowrap hover:opacity-75"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span>Back to Top</span> </button> </div> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">  <a href="/posts/notes/cinder-csi" class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"> <div> <span>Next Post</span> <div class="text-sm text-accent/85">Cinder CSI</div> </div> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg> </a> </div> </main> <footer class="w-full mt-auto"> <div class="max-w-3xl mx-auto px-0"> <hr class="border-border" aria-hidden="true"> </div> <div class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/archiephan78" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title=" arch1ephan.com on Github"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only"> arch1ephan.com on Github</span> </a><a href="https://www.linkedin.com/in/chung-phan-4072b9156/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="arch1ephan.com on LinkedIn"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">arch1ephan.com on LinkedIn</span> </a><a href="mailto:chungphan7819@gmail.com" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="Send an email to arch1ephan.com"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Send an email to arch1ephan.com</span> </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>Copyright &#169; 2025</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>All rights reserved.</span> </div> </div> </footer>  </body></html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ml-2 opacity-0 group-hover:opacity-100 focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className =
+        "copy-code absolute right-3 -top-3 rounded bg-muted px-2 py-1 text-xs leading-4 text-foreground font-medium";
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /** Scrolls the document to the top when
+   * the "Back to Top" button is clicked. */
+  function backToTop() {
+    document.querySelector("#back-to-top")?.addEventListener("click", () => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+  }
+  backToTop();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

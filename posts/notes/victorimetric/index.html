@@ -1,0 +1,504 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://arch1ephan.com/posts/notes/victorimetric/"><meta name="generator" content="Astro v5.5.2"><!-- General Meta Tags --><title>VictoriaMetrics | arch1ephan.com</title><meta name="title" content="VictoriaMetrics | arch1ephan.com"><meta name="description" content="VictoriaMetrics"><meta name="author" content="archiephan"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="VictoriaMetrics | arch1ephan.com"><meta property="og:description" content="VictoriaMetrics"><meta property="og:url" content="https://arch1ephan.com/posts/notes/victorimetric/"><meta property="og:image" content="https://arch1ephan.com/posts/notes/victorimetric/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2025-07-17T08:15:41.000Z"><meta property="article:modified_time" content="2025-07-17T07:41:26.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://arch1ephan.com/posts/notes/victorimetric/"><meta property="twitter:title" content="VictoriaMetrics | arch1ephan.com"><meta property="twitter:description" content="VictoriaMetrics"><meta property="twitter:image" content="https://arch1ephan.com/posts/notes/victorimetric/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"VictoriaMetrics | arch1ephan.com","image":"https://arch1ephan.com/posts/notes/victorimetric/index.png","datePublished":"2025-07-17T08:15:41.000Z","dateModified":"2025-07-17T07:41:26.000Z","author":[{"@type":"Person","name":"archiephan","url":"https://arch1ephan.com/"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="arch1ephan.com" href="https://arch1ephan.com/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CMTcOisY.js"></script><script src="/toggle-theme.js"></script><script src="https://www.googletagmanager.com/gtag/js?id=G-EQL1B4QF4J"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-EQL1B4QF4J");
+    </script><link rel="stylesheet" href="/_astro/about.BjZ3mr78.css">
+<style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+[data-astro-image]{width:100%;height:auto;object-fit:var(--fit);object-position:var(--pos);aspect-ratio:var(--w) / var(--h)}[data-astro-image=responsive]{max-width:calc(var(--w) * 1px);max-height:calc(var(--h) * 1px)}[data-astro-image=fixed]{width:calc(var(--w) * 1px);height:calc(var(--h) * 1px)}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: victoria-metrics; }@layer astro { ::view-transition-old(victoria-metrics) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(victoria-metrics) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(victoria-metrics) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(victoria-metrics) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-2"] { view-transition-name: monitoring; }@layer astro { ::view-transition-old(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(monitoring) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: victoriametric; }@layer astro { ::view-transition-old(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(victoriametric) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body data-astro-cid-sckkx6r4>  <header> <a id="skip-to-content" href="#main-content" class="absolute -top-full left-16 z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <div id="nav-container" class="mx-auto flex max-w-3xl flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"> <a href="/" class="absolute py-1 text-2xl leading-7 font-semibold whitespace-nowrap sm:static"> arch1ephan.com </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:ml-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/posts" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <div class="relative" id="tags-dropdown"> <a href="/tags" class="block px-4 py-3 text-center font-medium hover:text-accent sm:px-2 sm:py-1"> <span class="flex items-center justify-center gap-1">
+Tags
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"> <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path> </svg> </span> </a> <div class="absolute top-full left-0 z-50 mt-1 hidden w-48 rounded-md bg-white py-1 shadow-lg dark:bg-gray-800" id="tags-menu"> <ul class="pt-2 pb-1">  </ul> </div> </div> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li> <li class="col-span-2"> <a href="/archives" class="group inline-block hover:text-accent focus-outline flex justify-center p-3 sm:p-1" aria-label="archives" title="Archives"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only">Archives</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <a href="/search" class="group inline-block hover:text-accent focus-outline flex p-3 sm:p-1" aria-label="search" title="Search"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span> </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </div> <div class="max-w-3xl mx-auto px-4"> <hr class="border-border" aria-hidden="true"> </div> </header> <script type="module">function d(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const s=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",s?"false":"true"),e.setAttribute("aria-label",s?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}function u(){const e=document.getElementById("tags-dropdown"),t=document.getElementById("tags-menu");let n;!e||!t||(e.addEventListener("mouseenter",()=>{clearTimeout(n),t.classList.remove("hidden")}),e.addEventListener("mouseleave",()=>{n=setTimeout(()=>{t.classList.add("hidden")},100)}))}d();u();document.addEventListener("astro:after-swap",()=>{d(),u()});</script> <div class="mx-auto flex w-full max-w-3xl items-center justify-start px-2"><a id="back-button" href="/" class="group inline-block hover:text-accent focus-outline mt-8 mb-2 flex hover:text-foreground/75"><svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>Go back</span></a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="mx-auto w-full max-w-3xl px-4 pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> VictoriaMetrics </h1> <div class="flex items-center gap-4"> <div class="flex items-end space-x-2 opacity-80 my-2"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-[1.375rem]"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg> <span class="sr-only">Published:</span> <span class="text-sm italic sm:text-base"> <time datetime="2025-07-17T08:15:41.000Z">17 Jul, 2025</time> <span aria-hidden="true"> | </span> <span class="sr-only">&nbsp;at&nbsp;</span> <span class="text-nowrap">08:15 AM</span> </span> </div> <div class="opacity-80 max-sm:hidden"><span aria-hidden="true" class="max-sm:hidden">
+|
+</span><a class="space-x-1.5 hover:opacity-75" href="https://github.com/archiephan78/archiephan78.github.io/edit/master/src/data/blog/notes/victorimetric.md" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span class="italic max-sm:text-sm sm:inline">Suggest Changes</span></a></div> </div> <article id="article" class="mx-auto prose mt-8 max-w-3xl"> <h1 id="victoriametrics">VictoriaMetrics</h1>
+<h2 id="what-is-victoriametrics">What is victoriaMetrics?</h2>
+<ul>
+<li>
+<p>VictoriaMetrics is a fast, cost-effective and scalable monitoring solution and time series database.</p>
+</li>
+<li>
+<p>VictoriaMetrics can be used as long-term storage for Prometheus</p>
+</li>
+<li>
+<p>VictoriaMetrics supports Prometheus querying API, so it can be used as Prometheus drop-in replacement in Grafana.</p>
+</li>
+<li>
+<p>VictoriaMetrics implements MetricsQL query language backwards compatible with PromQL.</p>
+</li>
+<li>
+<p>Uses 10x less RAM than InfluxDB and up to 7x less RAM than Prometheus, Thanos or Cortex when dealing with millions of unique time series</p>
+</li>
+<li>
+<p>Cluster supported</p>
+</li>
+</ul>
+<p><img  sizes="(min-width: 2234px) 2234px, 100vw" loading="lazy" decoding="async" fetchpriority="auto" style="--w: 2234; --h: 1502;" data-astro-image="responsive" width="2234" height="1502" src="/_astro/victoria-cluster.DDB27_kS_29bT3w.webp" srcset="/_astro/victoria-cluster.DDB27_kS_SY9ep.webp 640w, /_astro/victoria-cluster.DDB27_kS_Z2icjax.webp 750w, /_astro/victoria-cluster.DDB27_kS_ZR04hS.webp 828w, /_astro/victoria-cluster.DDB27_kS_u04jO.webp 1080w, /_astro/victoria-cluster.DDB27_kS_Z1pBbLS.webp 1280w, /_astro/victoria-cluster.DDB27_kS_is5My.webp 1668w, /_astro/victoria-cluster.DDB27_kS_Z2a3TfS.webp 2048w, /_astro/victoria-cluster.DDB27_kS_29bT3w.webp 2234w"></p>
+<h2 id="victoriametrics-cluster-install">VictoriaMetrics cluster install</h2>
+<p><img  sizes="(min-width: 501px) 501px, 100vw" loading="lazy" decoding="async" fetchpriority="auto" style="--w: 501; --h: 301;" data-astro-image="responsive" width="501" height="301" src="/_astro/Untitled.DnOmVkfZ_Z2tvdy1.webp" srcset="/_astro/Untitled.DnOmVkfZ_Z2tvdy1.webp 501w"></p>
+<ul>
+<li>On all nodes we install vmselect for query, vmstorage for store time series data, vminsert accepts the ingested data and spreads it among vmstorage</li>
+</ul>
+<h3 id="get-started">Get started:</h3>
+<ul>
+<li>Download pakage on all node</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">mkdir</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> victoriametric-binary</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">cd</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> victoriametric-binary</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">wget</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/v1.63.0/victoria-metrics-amd64-v1.63.0-cluster.tar.gz</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">tar</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -xvzf</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> victoria-metrics-amd64-v1.63.0-cluster.tar.gz</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">ls</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">victoria-metrics-amd64-v1.63.0-cluster.tar.gz</span><span style="color:#2B5581;--shiki-dark:#ECC48D">  vminsert-prod</span><span style="color:#2B5581;--shiki-dark:#ECC48D">  vmselect-prod</span><span style="color:#2B5581;--shiki-dark:#ECC48D">  vmstorage-prod</span></span></code></pre>
+<h4 id="install-vmstorage-on-three-node">Install vmstorage on three node</h4>
+<ul>
+<li>Create folder for store database and create systemd file, we config retentionPeriod for 3 days::</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">mkdir</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /opt/metric-storage</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cp</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vmstorage-prod</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /bin/</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">mkdir</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /var/log/vmstorage</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#C5E478">IP</span><span style="color:#D32F2F;--shiki-dark:#C792EA">=</span><span style="color:#22863A;--shiki-dark:#ECC48D">`</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">hostname</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -I</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> |</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> awk</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">{print $1}</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">`</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cat</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> &#x3C;&#x3C;</span><span style="color:#24292EFF;--shiki-dark:#D9F5DD"> EOF</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> ></span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /etc/systemd/system/vmstorage.service</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Unit]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Description=vmstorage systemd service.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Service]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">User=root</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Type=simple</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">ExecStart=/bin/vmstorage-prod -storageDataPath /opt/metric-storage -retentionPeriod 3d -httpListenAddr </span><span style="color:#2B5581;--shiki-dark:#C5E478">$IP</span><span style="color:#2B5581;--shiki-dark:#ECC48D">:8482 -vminsertAddr </span><span style="color:#2B5581;--shiki-dark:#C5E478">$IP</span><span style="color:#2B5581;--shiki-dark:#ECC48D">:8400 -vmselectAddr </span><span style="color:#2B5581;--shiki-dark:#C5E478">$IP</span><span style="color:#2B5581;--shiki-dark:#ECC48D">:8401</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Restart=always</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">StandardOutput=file:/var/log/vmstorage/vmstorage.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Install]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">WantedBy=multi-user.target</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D9F5DD">EOF</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">chmod</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 644</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /etc/systemd/system/vmstorage.service</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">systemctl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> start</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vmstorage</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">systemctl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> status</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vmstorage</span></span></code></pre>
+<h4 id="install-vmselect">Install vmselect</h4>
+<ul>
+<li>Create systemd file, config vmselect storage path to all vmstorage node:</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cp</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vmselect-prod</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /bin/</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">mkdir</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /var/log/vmselect/</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#C5E478">IP</span><span style="color:#D32F2F;--shiki-dark:#C792EA">=</span><span style="color:#22863A;--shiki-dark:#ECC48D">`</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">hostname</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -I</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> |</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> awk</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">{print $1}</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">`</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cat</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> &#x3C;&#x3C;</span><span style="color:#24292EFF;--shiki-dark:#D9F5DD"> EOF</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> ></span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /etc/systemd/system/vmselect.service</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Unit]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Description=vmselect systemd service.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Service]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">User=root</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Type=simple</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">ExecStart=/bin/vmselect-prod  -httpListenAddr </span><span style="color:#2B5581;--shiki-dark:#C5E478">$IP</span><span style="color:#2B5581;--shiki-dark:#ECC48D">:8481 -storageNode=192.168.78.185:8401 -storageNode=192.168.78.214:8401 -storageNode=192.168.78.237:8401</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Restart=always</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">StandardOutput=file:/var/log/vmselect/vmselect.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Install]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">WantedBy=multi-user.target</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D9F5DD">EOF</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">chmod</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 644</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /etc/systemd/system/vmselect.service</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">systemctl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> start</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vmselect</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">systemctl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> status</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vmselect</span></span></code></pre>
+<h3 id="install-vminsert">Install vminsert</h3>
+<ul>
+<li>Create systemd file, config vminsert storage path to all vmstorage node:</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cp</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vminsert-prod</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /bin/</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">mkdir</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /var/log/vminsert/</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#C5E478">IP</span><span style="color:#D32F2F;--shiki-dark:#C792EA">=</span><span style="color:#22863A;--shiki-dark:#ECC48D">`</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">hostname</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -I</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> |</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> awk</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">{print $1}</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">`</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cat</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> &#x3C;&#x3C;</span><span style="color:#24292EFF;--shiki-dark:#D9F5DD"> EOF</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> ></span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /etc/systemd/system/vminsert.service</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Unit]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Description=vminsert systemd service.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Service]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">User=root</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Type=simple</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">ExecStart=/bin/vminsert-prod  -httpListenAddr </span><span style="color:#2B5581;--shiki-dark:#C5E478">$IP</span><span style="color:#2B5581;--shiki-dark:#ECC48D">:8480 -storageNode=192.168.78.185:8400 -storageNode=192.168.78.214:8400 -storageNode=192.168.78.237:8400</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">Restart=always</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">StandardOutput=file:/var/log/vminsert/vminsert.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">[Install]</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">WantedBy=multi-user.target</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D9F5DD">EOF</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">chmod</span><span style="color:#1976D2;--shiki-dark:#F78C6C"> 644</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /etc/systemd/system/vminsert.service</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">systemctl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> start</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vminsert</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">systemctl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> status</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> vminsert</span></span></code></pre>
+<h3 id="config-nginx-for-vmselect-and-vminsert">Config nginx for vmselect and vminsert</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">cat</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> &#x3C;&#x3C;</span><span style="color:#24292EFF;--shiki-dark:#D9F5DD"> EOF</span><span style="color:#D32F2F;--shiki-dark:#7FDBCA"> ></span><span style="color:#2B5581;--shiki-dark:#ECC48D"> /etc/nginx/sites-enabledvictoriametrics</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   upstream vminsert {</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      server 192.168.78.185:8480;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      server 192.168.78.214:8480;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      server 192.168.78.237:8480;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   upstream vmselect {</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      server 192.168.78.185:8481;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      server 192.168.78.214:8481;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      server 192.168.78.237:8481;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   server {</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      listen 192.168.78.78:8480;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      location / {</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          proxy_pass http://vminsert;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      }</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   server {</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      listen 192.168.78.78:8481;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      location / {</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">          proxy_pass http://vmselect;</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">      }</span></span>
+<span class="line"><span style="color:#2B5581;--shiki-dark:#ECC48D">   }</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D9F5DD">EOF</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">nginx</span><span style="color:#2B5581;--shiki-dark:#82AAFF"> -t</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">systemctl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> restart</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> nginx</span></span></code></pre>
+<h4 id="config-prometheus-rewrite-to-victoriametrics">Config prometheus rewrite to victoriametrics</h4>
+<ul>
+<li>Install and config prometheus</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#ECC48D">docker-compose.yml</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">version</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">3.7</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">volumes</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    prometheus_data</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">networks</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  front-tier</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  back-tier</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">services</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  prometheus</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    image</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> prom/prometheus:v2.1.0</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    volumes</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">./prom/:/etc/prometheus/</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">prometheus_data:/prometheus</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    command</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">--config.file=/etc/prometheus/prometheus.yml</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">--storage.tsdb.path=/prometheus</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">--web.console.libraries=/usr/share/prometheus/console_libraries</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">--web.console.templates=/usr/share/prometheus/consoles</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    ports</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">9090:9090</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    restart</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> always</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">  node-exporter</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    image</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> prom/node-exporter</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    volumes</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">/proc:/host/proc:ro</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">/sys:/host/sys:ro</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">/:/rootfs:ro</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    command</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">--path.procfs=/host/proc</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">--path.sysfs=/host/sys</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">--collector.filesystem.ignored-mount-points</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span><span style="color:#22863A;--shiki-dark:#ECC48D">^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    ports</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">      - </span><span style="color:#22863A;--shiki-dark:#ECC48D">9100:9100</span></span>
+<span class="line"><span style="color:#D32F2F;--shiki-dark:#7FDBCA">    restart</span><span style="color:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="color:#22863A;--shiki-dark:#ECC48D"> always</span></span></code></pre>
+<ul>
+<li>Config prometheus remote_write to vmselect via nginx:</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">root@santafe-1:~/prometheus#</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> cat</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> prom/prometheus.yml</span></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># my global config</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">global:</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">  scrape_interval:</span><span style="color:#2B5581;--shiki-dark:#ECC48D">     15s</span><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> # By default, scrape targets every 15 seconds.</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">  evaluation_interval:</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> 15s</span><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> # By default, scrape targets every 15 seconds.</span></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # scrape_timeout is set to the global default (10s).</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # Attach these labels to any time series or alerts when communicating with</span></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # external systems (federation, remote storage, Alertmanager).</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># A scrape configuration containing exactly one endpoint to scrape:</span></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># Here it's Prometheus itself.</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">scrape_configs:</span></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # The job name is added as a label `job=&#x3C;job_name>` to any timeseries scraped from this config.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">  -</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> job_name:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">prometheus</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # Override the global default and scrape targets from this job every 5 seconds.</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">    scrape_interval:</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> 5s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">    static_configs:</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">         -</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> targets:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">localhost:9090</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">  -</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> job_name:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="color:#22863A;--shiki-dark:#ECC48D">node_exporter</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C2C3C5;font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # Override the global default and scrape targets from this job every 5 seconds.</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">    scrape_interval:</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> 5s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">    static_configs:</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">         -</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> targets:</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#22863A;--shiki-dark:#ECC48D">192.168.78.185:9100</span><span style="color:#22863A;--shiki-dark:#D9F5DD">'</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">remote_write:</span></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">  -</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> url:</span><span style="color:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="color:#22863A;--shiki-dark:#ECC48D">http://192.168.78.78:8480/insert/0/prometheus/api/v1/write</span><span style="color:#22863A;--shiki-dark:#D9F5DD">"</span></span></code></pre>
+<h4 id="query-example">Query example:</h4>
+<ul>
+<li>
+<p>URLs for Prometheus querying API: http://<nginx>:8481/select/<accountid>/prometheus/<suffix></suffix></accountid></nginx></p>
+</li>
+<li>
+<p><accountid> is an arbitrary 32-bit integer identifying namespace for data ingestion (aka tenant). It is possible to set it as accountID:projectID, where projectID is also arbitrary 32-bit integer. If projectID isn’t set, then it equals to 0</accountid></p>
+</li>
+<li>
+<p>a suffix is PromQL instant query.(read Prometheus docs)</p>
+</li>
+<li>
+<p>Example query:</p>
+</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="background-color:#ffffff;--shiki-dark-bg:#011627;color:#24292eff;--shiki-dark:#d6deeb; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">root@santafe-1:~/prometheus#</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> curl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> http://192.168.78.78:8481/select/0/prometheus/api/v1/labels</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">{</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"status"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">:</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"success"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"isPartial"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">:false,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"data"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">:</span><span style="color:#2B5581;--shiki-dark:#ECC48D">[</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"__name__"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"address"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"branch"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"broadcast"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"call"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"cause"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"code"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"collector"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"cpu"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"device"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"dialer_name"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"domainname"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"duplex"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"endpoint"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"event"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"fstype"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"goversion"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"handler"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"instance"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"interval"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"ip"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"job"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"le"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"listener_name"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"machine"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"method"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"mode"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"mountpoint"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"name"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"nodename"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"operstate"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"quantile"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"queue"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"reason"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"release"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"revision"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"role"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"scrape_job"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"slice"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"sysname"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"time_zone"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"type"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"version"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">]}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">root@santafe-1:~/prometheus#</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> curl</span><span style="color:#2B5581;--shiki-dark:#ECC48D"> http://192.168.78.78:8481/select/0/prometheus/api/v1/query?query=node_load1</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#D6DEEB">{</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"status"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">:</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"success"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"isPartial"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">:false,</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"data"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">:</span><span style="color:#2B5581;--shiki-dark:#ECC48D">{</span><span style="color:#24292EFF;--shiki-dark:#D6DEEB">"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">resultType</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">":"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">vector</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">","</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">result</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">":[{"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">metric</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">":{"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">__name__</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">":"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">node_load1</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">","</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">instance</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">":"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">192.168.78.185:9100</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">","</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">job</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">":"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">node_exporter</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"},"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">value</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">":[1629234854,"</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">0.01</span><span style="color:#6F42C1;font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">"]}]}}</span></span></code></pre>
+<h4 id="grafana-integration">Grafana integration</h4>
+<ul>
+<li>
+<p>Config data source type prometheus with urrk <a href="http://192.168.78.78:8481/select/0/prometheus/">http://192.168.78.78:8481/select/0/prometheus/</a></p>
+</li>
+<li>
+<p>Add dasshboard for node exporter:</p>
+</li>
+</ul>
+<p><img  sizes="(min-width: 3322px) 3322px, 100vw" loading="lazy" decoding="async" fetchpriority="auto" style="--w: 3322; --h: 1700;" data-astro-image="responsive" width="3322" height="1700" src="/_astro/n.b6tzdIAO_ZEmwjQ.webp" srcset="/_astro/n.b6tzdIAO_1eadV1.webp 640w, /_astro/n.b6tzdIAO_Z1fIdeH.webp 750w, /_astro/n.b6tzdIAO_Z1JzlQv.webp 828w, /_astro/n.b6tzdIAO_1a3esp.webp 1080w, /_astro/n.b6tzdIAO_10P8th.webp 1280w, /_astro/n.b6tzdIAO_Z4z7Tm.webp 1668w, /_astro/n.b6tzdIAO_GF5yM.webp 2048w, /_astro/n.b6tzdIAO_Z13ECMH.webp 2560w, /_astro/n.b6tzdIAO_ZEmwjQ.webp 3322w"></p> </article> <hr class="my-8 border-dashed"> <div class="opacity-80 sm:hidden"><span aria-hidden="true" class="max-sm:hidden">
+|
+</span><a class="space-x-1.5 hover:opacity-75" href="https://github.com/archiephan78/archiephan78.github.io/edit/master/src/data/blog/notes/victorimetric.md" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg><span class="italic max-sm:text-sm sm:inline">Suggest Changes</span></a></div> <ul class="mt-4 mb-8 sm:my-8"> <li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/monitoring/" class="relative pr-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 text-sm" data-astro-transition-scope="astro-36ssibgs-2"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -mr-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>monitoring</span> </a> </li><li class="group inline-block group-hover:cursor-pointer my-1 underline-offset-4"> <a href="/tags/victoriametric/" class="relative pr-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 text-sm" data-astro-transition-scope="astro-36ssibgs-3"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block opacity-80 -mr-3.5 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
+&nbsp;<span>victoriametric</span> </a> </li> </ul> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();;(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="ZQIRKt" component-url="/_astro/Comments.Bq4i52d7.js" component-export="default" renderer-url="/_astro/client.BPIbHqJh.js" props="{}" ssr client="only" opts="{&quot;name&quot;:&quot;Comments&quot;,&quot;value&quot;:&quot;react&quot;}"></astro-island> <div class="mt-4 flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-end sm:gap-4"> <div class="flex flex-col flex-wrap items-center justify-center gap-1 sm:items-start"> <span class="italic">Share this post on:</span> <div class="text-center"> <a href="https://wa.me/?text=https://arch1ephan.com/posts/notes/victorimetric/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via WhatsApp"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg> <span class="sr-only">Share this post via WhatsApp</span> </a><a href="https://www.facebook.com/sharer.php?u=https://arch1ephan.com/posts/notes/victorimetric/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Facebook"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg> <span class="sr-only">Share this post on Facebook</span> </a><a href="https://x.com/intent/post?url=https://arch1ephan.com/posts/notes/victorimetric/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on X"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">Share this post on X</span> </a><a href="https://t.me/share/url?url=https://arch1ephan.com/posts/notes/victorimetric/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via Telegram"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg> <span class="sr-only">Share this post via Telegram</span> </a><a href="https://pinterest.com/pin/create/button/?url=https://arch1ephan.com/posts/notes/victorimetric/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post on Pinterest"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg> <span class="sr-only">Share this post on Pinterest</span> </a><a href="mailto:?subject=See%20this%20post&#38;body=https://arch1ephan.com/posts/notes/victorimetric/" class="group inline-block hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1" title="Share this post via email"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Share this post via email</span> </a> </div> </div> <button id="back-to-top" class="focus-outline py-1 whitespace-nowrap hover:opacity-75"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span>Back to Top</span> </button> </div> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2"> <a href="/posts/notes/oauth2-with-openid" class="flex w-full gap-1 hover:opacity-75"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <div> <span>Previous Post</span> <div class="text-sm text-accent/85">OAuth2 with Openstack Keystone</div> </div> </a> <a href="/posts/notes/k8s-vms" class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"> <div> <span>Next Post</span> <div class="text-sm text-accent/85">VictoriaMetrics on K8s</div> </div> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg> </a> </div> </main> <footer class="w-full mt-auto"> <div class="max-w-3xl mx-auto px-0"> <hr class="border-border" aria-hidden="true"> </div> <div class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/archiephan78" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title=" arch1ephan.com on Github"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only"> arch1ephan.com on Github</span> </a><a href="https://www.linkedin.com/in/chung-phan-4072b9156/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="arch1ephan.com on LinkedIn"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">arch1ephan.com on LinkedIn</span> </a><a href="mailto:chungphan7819@gmail.com" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="Send an email to arch1ephan.com"> <svg viewBox="0 0 24 24" role="img"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Send an email to arch1ephan.com</span> </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>Copyright &#169; 2025</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>All rights reserved.</span> </div> </div> </footer>  </body></html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ml-2 opacity-0 group-hover:opacity-100 focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const copyButton = document.createElement("button");
+      copyButton.className =
+        "copy-code absolute right-3 -top-3 rounded bg-muted px-2 py-1 text-xs leading-4 text-foreground font-medium";
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /** Scrolls the document to the top when
+   * the "Back to Top" button is clicked. */
+  function backToTop() {
+    document.querySelector("#back-to-top")?.addEventListener("click", () => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+  }
+  backToTop();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
