@@ -43,6 +43,9 @@ jobs:
       - name: "🚀 Build the project"
         run: pnpm run build
 
+      - name: Create CNAME file
+        run: echo "arch1ephan.com" > dist/CNAME
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
