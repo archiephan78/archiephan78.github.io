@@ -1,8 +1,7 @@
 ---
-title: VictoriaMetrics operator on K8S 
 author: archiephan
 pubDatetime: 2025-07-17T08:15:41Z
-modDatetime: 2025-07-17T07:41:26Z
+modDatetime: 2025-07-17T08:19:05Z
 title: "VictoriaMetrics operator on K8S"
 draft: false
 tags:
